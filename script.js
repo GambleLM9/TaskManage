@@ -1,5 +1,6 @@
 let tasks = []; //Stores all the inputed tasks
 
+
 function addTask(){ //Adds the tasks to the list
     let taskInput = document.getElementById("taskInput").value;
     console.log(taskInput);
@@ -9,23 +10,30 @@ function addTask(){ //Adds the tasks to the list
 }
 
 function displayTask(){ //Updates the task list
-    let updateDisplay = `<div class="task-list">`
-    tasks.forEach((i,index)=>{ //Loop to continually add inputs
-        updateDisplay += `<div class="task-item">`
-        updateDisplay +=`
-            <p class="task-text">${index + 1}. ${i}</p> 
-            <button onclick="editTask()" class="edit-btn">Edit</button>
+    let taskDisplay = document.getElementById("taskList"); //Binds the taskDisplay variable to the taskList element
+    let updateDisplay = ``;
+    updateDisplay += '<div class="task-list">'
+    for(let i=0; i<tasks.length; i++){ //Loop to continually add inputs
+        updateDisplay += 
+            `<div class="task-item">
+            <p class="task-text">${i + 1}. ${tasks[i]}</p> 
+            <button onclick="editTask(${i})" class="edit-btn">Edit</button>
             <button onclick="deleteTask(${i})" class="delete-btn">Delete</button>
+            </div>
             `
-        updateDisplay += `</div>`
-    })
-    updateDisplay += `</div>`
+    }
+     
     taskDisplay.innerHTML = updateDisplay
 }
 
 function deleteTask(index){
-    tasks.splice(index,i)
+    tasks.splice(index,1)
     displayTask();
 }
 
-let taskDisplay = document.getElementById("taskList"); //Binds the taskDisplay variable to the taskList element
+function editTask(index){
+    const newTask=prompt('Edit Task', tasks[index]);
+    console.log(newTask);
+    tasks[index]=newTask.trim();
+    displayTask();
+}
